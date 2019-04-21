@@ -1,6 +1,5 @@
 ## Some notes/examples connected to RxJS
 
-
 Project includes:
 * [RxJS](https://rxjs.dev/)
 * [TypeScript](https://www.typescriptlang.org/)
