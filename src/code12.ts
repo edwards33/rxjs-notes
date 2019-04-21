@@ -1,4 +1,4 @@
-import { AsyncSubject } from 'rxjs/AsyncSubject';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
 
 const addItem = (val:any) => {
     var node = document.createElement("li");
@@ -7,10 +7,12 @@ const addItem = (val:any) => {
     document.getElementById("output").appendChild(node);
 }
 
-const subject = new AsyncSubject()
+//30 events in 200 ms:
+const subject = new ReplaySubject(30, 200)
 
 subject.subscribe(
     data => addItem('First Observer: ' + data),
+    err => addItem(err),
     () => addItem('First Observer Completed')
 )
 
@@ -21,6 +23,5 @@ setTimeout(() => {
   const secondObserver = subject.subscribe(
     data => addItem('Second Observer: ' + data)
   )
-  subject.complete()
 }, 500);
 

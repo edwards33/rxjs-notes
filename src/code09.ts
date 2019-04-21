@@ -1,4 +1,4 @@
-import { AsyncSubject } from 'rxjs/AsyncSubject';
+import { Subject } from 'rxjs/Subject';
 
 const addItem = (val:any) => {
     var node = document.createElement("li");
@@ -7,20 +7,23 @@ const addItem = (val:any) => {
     document.getElementById("output").appendChild(node);
 }
 
-const subject = new AsyncSubject()
+const subject = new Subject()
 
 subject.subscribe(
     data => addItem('First Observer: ' + data),
+    err => addItem(err),
     () => addItem('First Observer Completed')
 )
 
-var i = 1;
-var int = setInterval(() => subject.next(i++), 100);
+subject.next('First msg has been sent');
 
-setTimeout(() => {
-  const secondObserver = subject.subscribe(
+const secondObserver = subject.subscribe(
     data => addItem('Second Observer: ' + data)
-  )
-  subject.complete()
-}, 500);
+)
 
+subject.next('Second msg has been sent');
+subject.next('Third msg has been sent');
+
+secondObserver.unsubscribe();
+
+subject.next('Final msg has been sent');
