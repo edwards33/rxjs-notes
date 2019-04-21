@@ -1,0 +1,28 @@
+{
+  "name": "rxjs-notes",
+  "version": "0.1.0",
+  "description": "Some notes connected to RxJS",
+  "main": "app.js",
+  "scripts": {
+    "start": "webpack-dev-server --mode development"
+  },
+  "keywords": [
+    "RxJS",
+    "JS"
+  ],
+  "author": "Edward",
+  "license": "MIT",
+  "dependencies": {
+    "rxjs": "^6.4.0",
+    "rxjs-compat": "^6.4.0",
+    "ts-loader": "^5.3.3",
+    "typescript": "^3.4.4",
+    "webpack": "^4.30.0",
+    "webpack-dev-server": "^3.3.1"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.3.1",
+    "webpack-dev-middleware": "^3.6.2",
+    "webpack-hot-middleware": "^2.24.3"
+  }
+}
