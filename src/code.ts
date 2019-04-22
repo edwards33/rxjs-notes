@@ -1,4 +1,7 @@
-import { AsyncSubject } from 'rxjs/AsyncSubject';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
+import { interval } from 'rxjs';
+import 'rxjs/add/operator/skipUntil';
 
 const addItem = (val:any) => {
     var node = document.createElement("li");
@@ -7,20 +10,22 @@ const addItem = (val:any) => {
     document.getElementById("output").appendChild(node);
 }
 
-const subject = new AsyncSubject()
+const firstObservable = Observable.create((data:any) => {
+    var i = 1
+    setInterval(() => {
+       data.next(i++)
+    }, 500)
+});
 
-subject.subscribe(
-    data => addItem('First Observer: ' + data),
-    () => addItem('First Observer Completed')
-)
-
-var i = 1;
-var int = setInterval(() => subject.next(i++), 100);
+const secondObservable = new Subject;
 
 setTimeout(() => {
-  const secondObserver = subject.subscribe(
-    data => addItem('Second Observer: ' + data)
-  )
-  subject.complete()
-}, 500);
+    secondObservable.next('Hi from Second Observable')
+}, 3000)
+
+const newObserver = firstObservable.skipUntil(secondObservable)
+
+newObserver.subscribe((val:any) => addItem(val))
+
+
 
